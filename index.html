@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Evaluación Parcial 1 | Diseño Curricular II</title>
+  <style>
+    :root{
+      --bg:#f6f2ec; --ink:#1f2522; --muted:#68726c; --card:#fffdf9; --line:#e6ded2;
+      --green:#138a4a; --green-soft:#e8f7ee; --yellow:#b77700; --yellow-soft:#fff5d9;
+      --red:#bb2d3b; --red-soft:#fde8ea; --orange:#d85f18; --purple:#6c3fa4; --gray:#44504a;
+      --shadow: 0 14px 36px rgba(31,37,34,.10); --radius:22px;
+    }
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;background:linear-gradient(135deg,#fff8ef 0%,#f4f1ec 46%,#eef6ee 100%);color:var(--ink);font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;line-height:1.45}
+    header.hero{padding:28px 28px 22px;background:linear-gradient(135deg,#222 0%,#3c2b21 35%,#7c2c23 67%,#11633d 100%);color:white;position:relative;overflow:hidden}
+    header.hero:before{content:"";position:absolute;right:-100px;top:-100px;width:310px;height:310px;border-radius:50%;background:rgba(255,255,255,.12)}
+    .brand{display:flex;align-items:center;gap:14px;position:relative;z-index:1}.logoMark{width:54px;height:54px;border-radius:16px;background:#fff;color:#222;display:grid;place-items:center;font-weight:900;box-shadow:0 10px 24px rgba(0,0,0,.2)}
+    .brand small{display:block;opacity:.86;margin-top:3px}.hero h1{position:relative;z-index:1;margin:28px 0 8px;font-size:clamp(30px,4.4vw,58px);line-height:.98;letter-spacing:-.035em;max-width:1080px}.hero p{position:relative;z-index:1;max-width:1050px;font-size:clamp(16px,1.6vw,21px);opacity:.92}.heroGrid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:22px;max-width:1100px}.pill{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:9px 14px;font-size:14px;backdrop-filter:blur(8px)}
+    nav{position:sticky;top:0;z-index:10;background:rgba(255,253,249,.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:10px 22px;display:flex;gap:10px;overflow:auto}nav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:700;border:1px solid var(--line);border-radius:999px;padding:8px 12px;background:#fff}.wrap{max-width:1180px;margin:0 auto;padding:26px 22px 70px}.section{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;margin:18px 0}.section h2{font-size:clamp(24px,3vw,38px);line-height:1.05;margin:0 0 12px;letter-spacing:-.025em}.section h3{margin:22px 0 10px}.muted{color:var(--muted)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px}.card strong{display:block;margin-bottom:6px}.note{border-left:5px solid var(--orange);background:#fff7ed;padding:14px 16px;border-radius:16px;margin:14px 0}.okNote{border-left-color:var(--green);background:var(--green-soft)}.warnNote{border-left-color:var(--yellow);background:var(--yellow-soft)}.badNote{border-left-color:var(--red);background:var(--red-soft)}
+    label{display:block;font-weight:800;margin:13px 0 6px}input,select,textarea{width:100%;border:1px solid #d8d0c6;border-radius:14px;background:#fff;padding:12px 13px;font:inherit;color:var(--ink)}textarea{min-height:98px;resize:vertical}input:focus,select:focus,textarea:focus{outline:3px solid rgba(216,95,24,.18);border-color:var(--orange)}
+    .btn{border:0;border-radius:999px;background:#262a27;color:#fff;padding:12px 18px;font-weight:900;cursor:pointer;box-shadow:0 8px 18px rgba(0,0,0,.12)}.btn:hover{transform:translateY(-1px)}.btn.secondary{background:#fff;color:#222;border:1px solid var(--line)}.btn.green{background:var(--green)}.btn.orange{background:var(--orange)}.btn.red{background:var(--red)}.btn:disabled{opacity:.45;cursor:not-allowed;transform:none}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .caseList{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.caseBtn{text-align:left;border:1px solid var(--line);background:#fff;border-radius:18px;padding:16px;cursor:pointer}.caseBtn:hover,.caseBtn.active{border-color:var(--orange);box-shadow:0 8px 20px rgba(216,95,24,.18)}.caseBtn .tag{display:inline-block;background:#f0ece6;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;margin-bottom:8px}.caseBtn.active .tag{background:#ffe7d7;color:#9d3d0f}
+    .step{border:1px solid var(--line);border-radius:20px;padding:18px;margin:16px 0;background:#fff}.stepTitle{display:flex;align-items:center;gap:10px;margin-bottom:10px}.num{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#222;color:white;font-weight:900}.feedback{display:none;margin-top:8px;border-radius:14px;padding:10px 12px;font-size:14px}.feedback.green{display:block;color:#075e30;background:var(--green-soft);border:1px solid #bfe8cd}.feedback.yellow{display:block;color:#7b4b00;background:var(--yellow-soft);border:1px solid #f4d27a}.feedback.red{display:block;color:#8b1823;background:var(--red-soft);border:1px solid #f2b9bf}.traffic{display:inline-flex;gap:6px;align-items:center;font-size:13px;font-weight:900}.dot{width:11px;height:11px;border-radius:50%;background:#c7c7c7}.dot.green{background:var(--green)}.dot.yellow{background:var(--yellow)}.dot.red{background:var(--red)}
+    .checkboxGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.checkItem{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff}.checkItem input{width:auto;margin-top:3px}.scoreBox{position:sticky;bottom:14px;z-index:8;background:#232723;color:#fff;border-radius:20px;padding:14px 18px;box-shadow:0 14px 30px rgba(0,0,0,.24);display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:20px}.scoreBig{font-size:34px;font-weight:950}.progress{height:12px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden;width:min(360px,42vw)}.bar{height:100%;width:0%;background:linear-gradient(90deg,#e45c14,#f7ba2a,#16a463);transition:.25s}.hidden{display:none!important}.report{background:#fff;border:1px solid var(--line);padding:22px;border-radius:18px}.report table{border-collapse:collapse;width:100%;margin:12px 0}.report th,.report td{border:1px solid #ddd;padding:8px;text-align:left}.toolLinks a{display:inline-flex;margin:4px;border:1px solid var(--line);padding:8px 10px;border-radius:999px;text-decoration:none;color:#222;background:#fff;font-weight:800}.footer{font-size:13px;color:#666;text-align:center;margin-top:28px}.alertTop{background:#fff3cd;color:#664d03;border:1px solid #ffecb5;border-radius:16px;padding:14px;margin:16px 0}
+    @media (max-width:840px){.grid2,.grid3,.caseList,.checkboxGrid,.heroGrid{grid-template-columns:1fr}.scoreBox{position:relative;bottom:auto;align-items:flex-start;flex-direction:column}.progress{width:100%}.wrap{padding:16px 12px}.section{padding:18px}.hero{padding:22px 18px}}
+    @media print{header.hero,nav,.actions,.scoreBox,#registro,#casos,#actividad .actions,#endpointWarning{display:none!important}body{background:#fff}.wrap{max-width:100%;padding:0}.section{box-shadow:none;border:0}.report{border:0}.hidden{display:block!important}}
+  </style>
+</head>
+<body>
+<header class="hero">
+  <div class="brand">
+    <div class="logoMark">ISTT</div>
+    <div><strong>Instituto Superior Tecnológico Tsa´chila</strong><small>Carrera de Educación Inicial · Diseño Curricular II</small></div>
+  </div>
+  <h1>Evaluación Parcial 1: Simulador de planificación curricular</h1>
+  <p>Alternativa práctica autocalificable para demostrar competencias en articulación curricular, diseño metodológico, selección de recursos, evaluación e inclusión en Educación Inicial y Preparatoria.</p>
+  <div class="heroGrid">
+    <div class="pill">Semanas 1–4</div><div class="pill">Nota sobre 10</div><div class="pill">Retroalimentación inmediata</div><div class="pill">Reporte descargable</div>
+  </div>
+</header>
+<nav>
+  <a href="#registro">1. Registro</a><a href="#casos">2. Caso</a><a href="#actividad">3. Simulación</a><a href="#reporte">4. Reporte</a><a href="#herramientas">Herramientas IA</a>
+</nav>
+<div class="wrap">
+  <div id="endpointWarning" class="alertTop hidden"><strong>Configuración pendiente:</strong> el docente debe pegar la URL del Apps Script en la constante <code>APPS_SCRIPT_URL</code> del archivo <code>index.html</code>.</div>
+
+  <section id="registro" class="section">
+    <h2>1. Registro del estudiante</h2>
+    <p class="muted">Complete sus datos antes de iniciar. El sistema guardará el primer intento como oficial.</p>
+    <div class="grid2">
+      <div><label>Nombres</label><input id="names" autocomplete="given-name" placeholder="Ej.: María Fernanda"></div>
+      <div><label>Apellidos</label><input id="lastnames" autocomplete="family-name" placeholder="Ej.: Zambrano López"></div>
+      <div><label>Correo electrónico</label><input id="email" type="email" autocomplete="email" placeholder="correo@ejemplo.com"></div>
+      <div><label>Paralelo / curso</label><input id="parallel" placeholder="Ej.: 4to Educación Inicial A"></div>
+    </div>
+    <div id="attemptFeedback" class="feedback"></div>
+    <div class="actions"><button class="btn orange" id="checkBtn">Verificar intento</button></div>
+  </section>
+
+  <section id="casos" class="section">
+    <h2>2. Seleccione un caso de planificación</h2>
+    <p class="muted">Elija un caso. Luego deberá articular nivel, eje, ámbito, destreza, estrategia, recursos, evaluación e inclusión.</p>
+    <div class="caseList" id="caseList"></div>
+  </section>
+
+  <section id="actividad" class="section hidden">
+    <h2>3. Simulación curricular autocalificable</h2>
+    <div id="caseSummary" class="note okNote"></div>
+
+    <div class="step">
+      <div class="stepTitle"><span class="num">1</span><h3>Coherencia curricular</h3></div>
+      <div class="grid2">
+        <div><label>Nivel educativo</label><select id="levelSel"></select><div id="fbLevel" class="feedback"></div></div>
+        <div><label>Eje de desarrollo y aprendizaje</label><select id="ejeSel"></select><div id="fbEje" class="feedback"></div></div>
+        <div><label>Ámbito</label><select id="ambitoSel"></select><div id="fbAmbito" class="feedback"></div></div>
+        <div><label>Destreza con criterio de desempeño</label><select id="destrezaSel"></select><div id="fbDestreza" class="feedback"></div></div>
+      </div>
+      <label>Formule un objetivo de aprendizaje para esta experiencia</label>
+      <textarea id="objectiveText" placeholder="Ej.: Identificar... mediante... para..."></textarea>
+      <div id="fbObjective" class="feedback"></div>
+    </div>
+
+    <div class="step">
+      <div class="stepTitle"><span class="num">2</span><h3>Estrategia metodológica y secuencia didáctica</h3></div>
+      <label>Seleccione la estrategia metodológica principal</label>
+      <select id="strategySel"></select><div id="fbStrategy" class="feedback"></div>
+      <label>Describa la metodología: anticipación, construcción y consolidación</label>
+      <textarea id="methodText" placeholder="Describa cómo desarrollaría la experiencia con enfoque activo, lúdico, inclusivo y creativo..."></textarea>
+      <div id="fbMethod" class="feedback"></div>
+    </div>
+
+    <div class="step">
+      <div class="stepTitle"><span class="num">3</span><h3>Recursos y materiales</h3></div>
+      <p class="muted">Seleccione los recursos más pertinentes. Puede añadir otros si lo considera necesario.</p>
+      <div id="resourcesBox" class="checkboxGrid"></div>
+      <div id="fbResources" class="feedback"></div>
+      <label>Otros recursos propuestos por el estudiante</label>
+      <input id="otherResources" placeholder="Ej.: títeres, pictogramas, material reciclado, tarjetas sensoriales...">
+    </div>
+
+    <div class="step">
+      <div class="stepTitle"><span class="num">4</span><h3>Evaluación educativa</h3></div>
+      <div class="grid3">
+        <div><label>Indicador de evaluación</label><select id="indicatorSel"></select><div id="fbIndicator" class="feedback"></div></div>
+        <div><label>Técnica</label><select id="techniqueSel"></select><div id="fbTechnique" class="feedback"></div></div>
+        <div><label>Instrumento</label><select id="instrumentSel"></select><div id="fbInstrument" class="feedback"></div></div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="stepTitle"><span class="num">5</span><h3>Inclusión, DUA y diversidad del aula</h3></div>
+      <p class="muted">Seleccione los apoyos DUA/ajustes más pertinentes para que todos los niños participen.</p>
+      <div id="duaBox" class="checkboxGrid"></div>
+      <div id="fbDua" class="feedback"></div>
+      <label>Explique un ajuste inclusivo concreto para esta experiencia</label>
+      <textarea id="inclusionText" placeholder="Ej.: Para un niño con dificultad de lenguaje, usaría pictogramas, modelado, apoyo de pares y opciones de respuesta no verbal..."></textarea>
+      <div id="fbInclusion" class="feedback"></div>
+    </div>
+
+    <div class="actions">
+      <button class="btn green" id="gradeBtn">Calificar y generar reporte</button>
+      <button class="btn secondary" id="resetBtn">Reiniciar simulación</button>
+    </div>
+
+    <div class="scoreBox">
+      <div><strong>Progreso de pertinencia curricular</strong><br><span id="scoreLabel">Complete la simulación para estimar la nota.</span></div>
+      <div class="progress"><div class="bar" id="scoreBar"></div></div>
+      <div class="scoreBig"><span id="scoreNum">0.00</span>/10</div>
+    </div>
+  </section>
+
+  <section id="reporte" class="section hidden">
+    <h2>4. Reporte final</h2>
+    <div id="saveStatus" class="note warnNote"></div>
+    <div id="reportContent" class="report"></div>
+    <div class="actions"><button class="btn orange" onclick="window.print()">Imprimir / Guardar como PDF</button><button class="btn secondary" id="downloadJsonBtn">Descargar respaldo JSON</button></div>
+  </section>
+
+  <section id="herramientas" class="section">
+    <h2>Herramientas de apoyo para diseñar instrumentos</h2>
+    <p class="muted">Estas herramientas pueden apoyar la elaboración de rúbricas, listas de cotejo, recursos y experiencias. El criterio docente sigue siendo indispensable.</p>
+    <div class="toolLinks">
+      <a href="https://app.magicschool.ai/tools" target="_blank" rel="noopener">MagicSchool</a>
+      <a href="https://www.tututor.ai/" target="_blank" rel="noopener">TuTutor IA</a>
+      <a href="https://app.megaprofe.es/login" target="_blank" rel="noopener">Megaprofe</a>
+      <a href="https://edtk.co/" target="_blank" rel="noopener">EDTK</a>
+      <a href="https://wordwall.net/es" target="_blank" rel="noopener">Wordwall</a>
+      <a href="https://es.educaplay.com/" target="_blank" rel="noopener">Educaplay</a>
+      <a href="https://learningapps.org/" target="_blank" rel="noopener">LearningApps</a>
+      <a href="https://recursos.educacion.gob.ec/inicial/" target="_blank" rel="noopener">Recursos Inicial MINEDUC</a>
+    </div>
+  </section>
+
+  <div class="footer">Diseño Curricular II · Evaluación parcial alternativa · Lic. Yordenis Ramos López, Ph.D. (c)</div>
+</div>
+
+<script>
+// ==============================
+// CONFIGURACIÓN DOCENTE
+// ==============================
+const APPS_SCRIPT_URL = 'PEGUE_AQUI_LA_URL_DE_APPS_SCRIPT';
+const EVALUATION_TOKEN = 'DCII-PARCIAL1-2026';
+
+const CASES = [
+  {id:'C1', level:'Educación Inicial 3-5 años', title:'Las semillas viajeras', brief:'Los niños observan semillas, las clasifican, siembran en vasos reciclados y registran cambios con dibujos.', eje:'Descubrimiento natural y cultural', ambito:'Relaciones con el medio natural y cultural', destreza:'Explorar, identificar y cuidar plantas del entorno mediante experiencias directas.', indicator:'Reconoce características de plantas y comunica formas de cuidado mediante dibujos o relatos.', strategy:'Aprendizaje basado en exploración y experimentación', resources:['Semillas','Vasos reciclados','Tierra','Regadera','Pictogramas de cuidado','Diario gráfico'], dua:['Material visual y concreto','Opciones de respuesta oral, gráfica o gestual','Tiempo flexible y apoyo de pares']},
+  {id:'C2', level:'Educación Inicial 3-5 años', title:'El rincón de las emociones', brief:'Los niños reconocen alegría, tristeza, enojo y miedo mediante cuento, tarjetas, música y expresión corporal.', eje:'Desarrollo personal y social', ambito:'Identidad y autonomía', destreza:'Reconocer y expresar emociones básicas en situaciones cotidianas.', indicator:'Identifica emociones básicas y las expresa mediante palabras, gestos, dibujos o dramatizaciones.', strategy:'Juego simbólico y expresión socioemocional', resources:['Cuento ilustrado','Tarjetas de emociones','Espejo','Música suave','Títeres','Pictogramas'], dua:['Apoyos visuales/pictogramas','Modelado docente','Respuesta no verbal permitida']},
+  {id:'C3', level:'Educación Inicial 3-5 años', title:'Cuentos con pictogramas', brief:'Los niños escuchan un cuento breve, anticipan lo que sucederá y reconstruyen la historia con pictogramas.', eje:'Expresión y comunicación', ambito:'Comprensión y expresión del lenguaje', destreza:'Comprender y narrar textos orales sencillos con apoyo de imágenes.', indicator:'Relata ideas principales de un cuento usando lenguaje oral, gráfico o pictográfico.', strategy:'Animación a la lectura con mediación visual', resources:['Cuento','Pictogramas','Tarjetas de secuencia','Láminas','Títeres','Panel de historia'], dua:['Múltiples formas de representación','Apoyo auditivo y visual','Participación por turnos']},
+  {id:'C4', level:'EGB Preparatoria 5-6 años', title:'Figuras geométricas en mi entorno', brief:'Los estudiantes reconocen triángulo, cuadrado, rectángulo y círculo en objetos del aula y construyen figuras con material concreto.', eje:'Descubrimiento del medio natural y cultural', ambito:'Relaciones lógico-matemáticas', destreza:'M.1.4.21. Reconocer figuras geométricas en objetos del entorno.', indicator:'Encuentra objetos semejantes a figuras geométricas y explica verbalmente sus características.', strategy:'Aprendizaje basado en juego y material concreto', resources:['Bloques lógicos','Objetos del aula','Cinta adhesiva','Tarjetas de figuras','Aros','Hoja de registro'], dua:['Material manipulativo','Consignas breves y visuales','Trabajo cooperativo heterogéneo']},
+  {id:'C5', level:'EGB Preparatoria 5-6 años', title:'Hablo sobre lo que siento', brief:'A partir de un cuento y canciones, los estudiantes expresan emociones con canto, dibujo, color, dramatización y conversación.', eje:'Expresión y comunicación', ambito:'Comprensión y expresión artística', destreza:'ECA.1.6.2. Utilizar la expresión gráfica o plástica como recurso para la expresión libre del yo.', indicator:'Explora y representa corporal, musical, gráfica o verbalmente ideas, sentimientos o emociones.', strategy:'Expresión artística y dramatización guiada', resources:['Cuento El monstruo de colores','Lana de colores','Cartulina','Crayones','Canción','Pictogramas emocionales'], dua:['Elección de producto: dibujo, gesto o palabra','Regulación emocional con pausas','Apoyo visual de emociones']},
+  {id:'C6', level:'EGB Preparatoria 5-6 años', title:'Normas de convivencia en mi aula', brief:'Los estudiantes observan situaciones, dramatizan acuerdos, crean un cartel de normas y eligen una norma para practicar en casa.', eje:'Desarrollo personal y social', ambito:'Convivencia', destreza:'CS.1.2.10. Resolver pequeñas diferencias con sus pares utilizando lenguaje respetuoso y claro.', indicator:'Reconoce normas, derechos y responsabilidades y participa en acuerdos de convivencia.', strategy:'Dramatización, aprendizaje cooperativo y acuerdos de aula', resources:['Video corto','Imágenes de normas','Cartel colectivo','Marcadores','Tarjetas de acuerdos','Caja sorpresa'], dua:['Roles flexibles en el grupo','Apoyos visuales','Anticipación de normas y rutinas']}
+];
+
+const OPTIONS = {
+  levels:['Educación Inicial 3-5 años','EGB Preparatoria 5-6 años','EGB Elemental','Bachillerato'],
+  ejes:['Desarrollo personal y social','Descubrimiento natural y cultural','Descubrimiento del medio natural y cultural','Expresión y comunicación','No corresponde al currículo'],
+  ambitos:['Identidad y autonomía','Convivencia','Relaciones con el medio natural y cultural','Comprensión y expresión del lenguaje','Relaciones lógico-matemáticas','Comprensión y expresión artística','Expresión corporal','No corresponde'],
+  destrezas:[
+    'Explorar, identificar y cuidar plantas del entorno mediante experiencias directas.',
+    'Reconocer y expresar emociones básicas en situaciones cotidianas.',
+    'Comprender y narrar textos orales sencillos con apoyo de imágenes.',
+    'M.1.4.21. Reconocer figuras geométricas en objetos del entorno.',
+    'ECA.1.6.2. Utilizar la expresión gráfica o plástica como recurso para la expresión libre del yo.',
+    'CS.1.2.10. Resolver pequeñas diferencias con sus pares utilizando lenguaje respetuoso y claro.',
+    'Memorizar definiciones abstractas sin apoyo contextual.',
+    'Copiar diez veces el contenido del pizarrón.'
+  ],
+  strategies:['Aprendizaje basado en exploración y experimentación','Juego simbólico y expresión socioemocional','Animación a la lectura con mediación visual','Aprendizaje basado en juego y material concreto','Expresión artística y dramatización guiada','Dramatización, aprendizaje cooperativo y acuerdos de aula','Clase magistral expositiva prolongada','Copia repetitiva como actividad central'],
+  resources:['Semillas','Vasos reciclados','Tierra','Regadera','Pictogramas de cuidado','Diario gráfico','Cuento ilustrado','Tarjetas de emociones','Espejo','Música suave','Títeres','Pictogramas','Cuento','Tarjetas de secuencia','Láminas','Panel de historia','Bloques lógicos','Objetos del aula','Cinta adhesiva','Tarjetas de figuras','Aros','Hoja de registro','Cuento El monstruo de colores','Lana de colores','Cartulina','Crayones','Canción','Pictogramas emocionales','Video corto','Imágenes de normas','Cartel colectivo','Marcadores','Tarjetas de acuerdos','Caja sorpresa','Texto universitario extenso','Prueba escrita de 20 ítems'],
+  indicators:['Reconoce características de plantas y comunica formas de cuidado mediante dibujos o relatos.','Identifica emociones básicas y las expresa mediante palabras, gestos, dibujos o dramatizaciones.','Relata ideas principales de un cuento usando lenguaje oral, gráfico o pictográfico.','Encuentra objetos semejantes a figuras geométricas y explica verbalmente sus características.','Explora y representa corporal, musical, gráfica o verbalmente ideas, sentimientos o emociones.','Reconoce normas, derechos y responsabilidades y participa en acuerdos de convivencia.','Resuelve ecuaciones de segundo grado.','Redacta un ensayo argumentativo con citas APA.'],
+  techniques:['Observación directa','Análisis de producciones infantiles','Diálogo pedagógico','Registro anecdótico','Prueba escrita estandarizada','Examen oral memorístico'],
+  instruments:['Lista de cotejo','Escala descriptiva cualitativa','Registro anecdótico','Rúbrica pictográfica simple','Examen de opción múltiple extenso','Ensayo académico'],
+  dua:['Material visual y concreto','Opciones de respuesta oral, gráfica o gestual','Tiempo flexible y apoyo de pares','Apoyos visuales/pictogramas','Modelado docente','Respuesta no verbal permitida','Múltiples formas de representación','Apoyo auditivo y visual','Participación por turnos','Material manipulativo','Consignas breves y visuales','Trabajo cooperativo heterogéneo','Elección de producto: dibujo, gesto o palabra','Regulación emocional con pausas','Apoyo visual de emociones','Roles flexibles en el grupo','Anticipación de normas y rutinas','Única forma de respuesta escrita','Mismo tiempo para todos sin apoyos']
+};
+
+let selectedCase = null;
+let lastPayload = null;
+let attemptCanSubmit = true;
+
+const $ = id => document.getElementById(id);
+function fillSelect(id, options){ const el=$(id); el.innerHTML='<option value="">Seleccione...</option>'+options.map(o=>`<option>${escapeHtml(o)}</option>`).join(''); }
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
+function setFeedback(id, type, text){ const el=$(id); el.className='feedback '+type; el.textContent=text; }
+function clearFeedback(id){ const el=$(id); el.className='feedback'; el.textContent=''; }
+
+function init(){
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('PEGUE_AQUI')) $('endpointWarning').classList.remove('hidden');
+  fillSelect('levelSel', OPTIONS.levels); fillSelect('ejeSel', OPTIONS.ejes); fillSelect('ambitoSel', OPTIONS.ambitos); fillSelect('destrezaSel', OPTIONS.destrezas);
+  fillSelect('strategySel', OPTIONS.strategies); fillSelect('indicatorSel', OPTIONS.indicators); fillSelect('techniqueSel', OPTIONS.techniques); fillSelect('instrumentSel', OPTIONS.instruments);
+  renderCases(); renderChecks('resourcesBox', OPTIONS.resources, 'res'); renderChecks('duaBox', OPTIONS.dua, 'dua');
+  ['levelSel','ejeSel','ambitoSel','destrezaSel','strategySel','indicatorSel','techniqueSel','instrumentSel'].forEach(id=>$(id).addEventListener('change', liveGrade));
+  ['objectiveText','methodText','inclusionText'].forEach(id=>$(id).addEventListener('input', liveGrade));
+  document.querySelectorAll('input[type="checkbox"]').forEach(ch=>ch.addEventListener('change', liveGrade));
+  $('checkBtn').addEventListener('click', checkAttempt);
+  $('gradeBtn').addEventListener('click', finalize);
+  $('resetBtn').addEventListener('click', ()=>location.reload());
+  $('downloadJsonBtn').addEventListener('click', downloadJson);
+}
+function renderCases(){
+  $('caseList').innerHTML = CASES.map(c=>`<button class="caseBtn" data-id="${c.id}"><span class="tag">${escapeHtml(c.level)}</span><strong>${escapeHtml(c.title)}</strong><p>${escapeHtml(c.brief)}</p></button>`).join('');
+  document.querySelectorAll('.caseBtn').forEach(btn=>btn.addEventListener('click',()=>selectCase(btn.dataset.id)));
+}
+function renderChecks(boxId, list, prefix){
+  $(boxId).innerHTML = list.map((o,i)=>`<label class="checkItem"><input type="checkbox" name="${prefix}" value="${escapeHtml(o)}"><span>${escapeHtml(o)}</span></label>`).join('');
+}
+function selectCase(id){
+  selectedCase = CASES.find(c=>c.id===id);
+  document.querySelectorAll('.caseBtn').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  $('actividad').classList.remove('hidden');
+  $('caseSummary').innerHTML = `<strong>Caso seleccionado: ${escapeHtml(selectedCase.title)}</strong><br>${escapeHtml(selectedCase.brief)}<br><br><span class="muted"><strong>Reto:</strong> articule una planificación microcurricular pertinente y evaluable.</span>`;
+  location.hash='actividad'; liveGrade();
+}
+function validateRegistration(){
+  const names=$('names').value.trim(), lastnames=$('lastnames').value.trim(), email=$('email').value.trim(), parallel=$('parallel').value.trim();
+  if(!names||!lastnames||!email||!parallel){return {ok:false,msg:'Complete nombres, apellidos, correo y paralelo.'};}
+  if(!/^\S+@\S+\.\S+$/.test(email)){return {ok:false,msg:'Ingrese un correo electrónico válido.'};}
+  return {ok:true, student:{names,lastnames,email:email.toLowerCase(),parallel}};
+}
+function checkAttempt(){
+  const v=validateRegistration();
+  if(!v.ok){setFeedback('attemptFeedback','red',v.msg);return;}
+  const localKey='dcii_p1_'+v.student.email;
+  if(localStorage.getItem(localKey)){ setFeedback('attemptFeedback','yellow','Este navegador registra un intento previo con este correo. Se recomienda no repetir la evaluación salvo autorización docente.'); }
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('PEGUE_AQUI')){ setFeedback('attemptFeedback','yellow','No se pudo verificar en Google Sheets porque el endpoint no está configurado. Puede continuar en modo local.'); return; }
+  jsonp(`${APPS_SCRIPT_URL}?action=check&email=${encodeURIComponent(v.student.email)}`).then(data=>{
+    attemptCanSubmit = !!data.canSubmitOfficial;
+    if(data.canSubmitOfficial) setFeedback('attemptFeedback','green','Verificación correcta: no existen intentos oficiales registrados con este correo.');
+    else setFeedback('attemptFeedback','red','Ya existe un intento oficial con este correo. Si continúa, el registro se guardará como duplicado no oficial.');
+  }).catch(()=>setFeedback('attemptFeedback','yellow','No fue posible verificar el intento. Revise conexión o endpoint. Puede continuar, pero el docente validará en la hoja.'));
+}
+function jsonp(url){
+  return new Promise((resolve,reject)=>{
+    const cb='cb_'+Date.now()+'_'+Math.floor(Math.random()*1000);
+    window[cb]=data=>{resolve(data); cleanup();};
+    const script=document.createElement('script');
+    const cleanup=()=>{delete window[cb]; script.remove();};
+    script.onerror=()=>{reject(); cleanup();};
+    script.src=url+(url.includes('?')?'&':'?')+'callback='+cb;
+    document.body.appendChild(script);
+    setTimeout(()=>{reject(); cleanup();},10000);
+  });
+}
+function gradeValue(value, expected, acceptable=[]){
+  if(!value) return {score:0,type:'yellow',msg:'Seleccione una opción para recibir retroalimentación.'};
+  if(value===expected) return {score:1,type:'green',msg:'Pertinente: la selección se articula con el caso y el currículo.'};
+  if(acceptable.includes(value)) return {score:.55,type:'yellow',msg:'Parcialmente pertinente: puede funcionar, pero requiere una justificación o ajuste curricular más claro.'};
+  return {score:0,type:'red',msg:'No pertinente para este caso. Revise nivel, ámbito, destreza y evidencia esperada.'};
+}
+function textScore(text, min, keywords, purpose){
+  const t=text.toLowerCase().trim();
+  let pts=0; if(t.length>=min) pts+=.45; if(keywords.some(k=>t.includes(k))) pts+=.35; if(purpose.some(k=>t.includes(k))) pts+=.20;
+  let type=pts>=.8?'green':pts>=.45?'yellow':'red';
+  let msg=pts>=.8?'Redacción pertinente: integra intención pedagógica y condiciones de aplicación.':pts>=.45?'Aceptable, pero requiere mayor precisión técnica, secuencia o finalidad pedagógica.':'Insuficiente: amplíe la redacción con acción, contenido, mediación, inclusión y finalidad.';
+  return {score:Math.min(1,pts),type,msg};
+}
+function getChecked(name){ return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(x=>x.value); }
+function multiScore(selected, expected){
+  if(!selected.length) return {score:0,type:'yellow',msg:'Seleccione recursos o apoyos para evaluar pertinencia.'};
+  const hits=selected.filter(x=>expected.includes(x)).length;
+  const wrong=selected.filter(x=>!expected.includes(x)).length;
+  const score=Math.max(0, Math.min(1, hits/expected.length - wrong*.12));
+  const type=score>=.75?'green':score>=.4?'yellow':'red';
+  const msg=type==='green'?'Selección pertinente: los recursos/apoyos facilitan la experiencia y la participación.':type==='yellow'?'Selección parcialmente pertinente: elimine distractores o añada recursos más coherentes con el caso.':'Selección poco pertinente: revise la relación entre actividad, edad, destreza y accesibilidad.';
+  return {score,type,msg};
+}
+function liveGrade(){ if(!selectedCase) return null; const r=calculate(); renderFeedback(r); return r; }
+function calculate(){
+  const c=selectedCase;
+  const level=gradeValue($('levelSel').value,c.level);
+  const eje=gradeValue($('ejeSel').value,c.eje, c.level.includes('Inicial')?['Expresión y comunicación','Desarrollo personal y social','Descubrimiento natural y cultural']:['Expresión y comunicación','Desarrollo personal y social','Descubrimiento del medio natural y cultural']);
+  const ambito=gradeValue($('ambitoSel').value,c.ambito);
+  const destreza=gradeValue($('destrezaSel').value,c.destreza);
+  const objective=textScore($('objectiveText').value,70,['identificar','reconocer','explorar','expresar','clasificar','comunicar','participar','resolver'],['mediante','para','con el fin']);
+  const strategy=gradeValue($('strategySel').value,c.strategy,['Aprendizaje basado en juego y material concreto','Dramatización, aprendizaje cooperativo y acuerdos de aula','Animación a la lectura con mediación visual','Expresión artística y dramatización guiada','Aprendizaje basado en exploración y experimentación','Juego simbólico y expresión socioemocional']);
+  const method=textScore($('methodText').value,130,['anticipación','construcción','consolidación','juego','exploración','material concreto','dramatización','cuento'],['inclus','particip','mediación','retroaliment']);
+  const resources=multiScore(getChecked('res'),c.resources);
+  const indicator=gradeValue($('indicatorSel').value,c.indicator);
+  const technique=gradeValue($('techniqueSel').value,'Observación directa',['Análisis de producciones infantiles','Diálogo pedagógico','Registro anecdótico']);
+  const instrument=gradeValue($('instrumentSel').value,'Lista de cotejo',['Escala descriptiva cualitativa','Registro anecdótico','Rúbrica pictográfica simple']);
+  const dua=multiScore(getChecked('dua'),c.dua);
+  const inclusion=textScore($('inclusionText').value,80,['dua','pictogram','visual','apoyo','ritmo','pares','particip','acceso','flexible','gestual'],['inclus','divers','ajuste','barrera']);
+  const coherencia = round(((level.score*.3)+(eje.score*.4)+(ambito.score*.5)+(destreza.score*.6)+(objective.score*.2))*1.0); // max 2
+  const metodologia = round((strategy.score*.9 + method.score*1.1)); // max 2
+  const recursos = round(resources.score*1.0);
+  const evaluacion = round(indicator.score*.8 + technique.score*.5 + instrument.score*.7); // max 2
+  const inclusionCrit = round(dua.score*.8 + inclusion.score*.7); // max 1.5
+  const argumentacion = round(objective.score*.5 + method.score*.5 + inclusion.score*.5); // max 1.5
+  const total=round(coherencia+metodologia+recursos+evaluacion+inclusionCrit+argumentacion);
+  return {items:{level,eje,ambito,destreza,objective,strategy,method,resources,indicator,technique,instrument,dua,inclusion},criteria:{coherencia,metodologia,recursos,evaluacion,inclusion:inclusionCrit,argumentacion},total};
+}
+function round(n){ return Math.round(n*100)/100; }
+function renderFeedback(r){
+  setFeedback('fbLevel',r.items.level.type,r.items.level.msg); setFeedback('fbEje',r.items.eje.type,r.items.eje.msg); setFeedback('fbAmbito',r.items.ambito.type,r.items.ambito.msg); setFeedback('fbDestreza',r.items.destreza.type,r.items.destreza.msg);
+  setFeedback('fbObjective',r.items.objective.type,r.items.objective.msg); setFeedback('fbStrategy',r.items.strategy.type,r.items.strategy.msg); setFeedback('fbMethod',r.items.method.type,r.items.method.msg); setFeedback('fbResources',r.items.resources.type,r.items.resources.msg);
+  setFeedback('fbIndicator',r.items.indicator.type,r.items.indicator.msg); setFeedback('fbTechnique',r.items.technique.type,r.items.technique.msg); setFeedback('fbInstrument',r.items.instrument.type,r.items.instrument.msg); setFeedback('fbDua',r.items.dua.type,r.items.dua.msg); setFeedback('fbInclusion',r.items.inclusion.type,r.items.inclusion.msg);
+  $('scoreNum').textContent=r.total.toFixed(2); $('scoreBar').style.width=(r.total*10)+'%'; $('scoreLabel').textContent=levelText(r.total)+' · '+summaryAdvice(r.total);
+}
+function levelText(score){ if(score>=9) return 'Excelente'; if(score>=7) return 'Satisfactorio'; if(score>=5) return 'En proceso'; return 'Inicial'; }
+function summaryAdvice(score){ if(score>=9) return 'La planificación muestra alta pertinencia curricular.'; if(score>=7) return 'Hay coherencia general; ajuste algunos componentes.'; if(score>=5) return 'Requiere mejorar articulación y evaluación.'; return 'Necesita rehacer decisiones curriculares clave.'; }
+function finalize(){
+  const reg=validateRegistration(); if(!reg.ok){ alert(reg.msg); location.hash='registro'; return; }
+  if(!selectedCase){ alert('Seleccione un caso de planificación.'); location.hash='casos'; return; }
+  const r=calculate(); renderFeedback(r);
+  const selections={level:$('levelSel').value,eje:$('ejeSel').value,ambito:$('ambitoSel').value,destreza:$('destrezaSel').value,strategy:$('strategySel').value,resources:getChecked('res'),otherResources:$('otherResources').value,indicator:$('indicatorSel').value,technique:$('techniqueSel').value,instrument:$('instrumentSel').value,dua:getChecked('dua')};
+  const texts={objective:$('objectiveText').value,methodology:$('methodText').value,inclusion:$('inclusionText').value};
+  const finalFeedback = `${levelText(r.total)}. ${summaryAdvice(r.total)} Coherencia: ${r.criteria.coherencia}/2; Metodología: ${r.criteria.metodologia}/2; Recursos: ${r.criteria.recursos}/1; Evaluación: ${r.criteria.evaluacion}/2; Inclusión/DUA: ${r.criteria.inclusion}/1.5; Argumentación: ${r.criteria.argumentacion}/1.5.`;
+  lastPayload={token:EVALUATION_TOKEN,clientTimestamp:new Date().toLocaleString(),student:reg.student,caseId:selectedCase.id,caseTitle:selectedCase.title,score:r.total,rawPoints:r.total,levelText:levelText(r.total),criteria:r.criteria,selections,texts,feedbackItems:r.items,finalFeedback};
+  renderReport(lastPayload);
+  localStorage.setItem('dcii_p1_'+reg.student.email, JSON.stringify({date:new Date().toISOString(), score:r.total}));
+  sendToSheets(lastPayload);
+  $('reporte').classList.remove('hidden'); location.hash='reporte';
+}
+function renderReport(p){
+  $('reportContent').innerHTML = `
+    <h3>Reporte de evaluación parcial 1</h3>
+    <p><strong>Estudiante:</strong> ${escapeHtml(p.student.names)} ${escapeHtml(p.student.lastnames)}<br><strong>Correo:</strong> ${escapeHtml(p.student.email)}<br><strong>Paralelo:</strong> ${escapeHtml(p.student.parallel)}<br><strong>Caso:</strong> ${escapeHtml(p.caseTitle)}</p>
+    <h2>Nota final: ${p.score.toFixed(2)} / 10 · ${escapeHtml(p.levelText)}</h2>
+    <table><tr><th>Criterio</th><th>Puntaje</th></tr>
+      <tr><td>Coherencia curricular</td><td>${p.criteria.coherencia} / 2</td></tr>
+      <tr><td>Metodología</td><td>${p.criteria.metodologia} / 2</td></tr>
+      <tr><td>Recursos</td><td>${p.criteria.recursos} / 1</td></tr>
+      <tr><td>Evaluación</td><td>${p.criteria.evaluacion} / 2</td></tr>
+      <tr><td>Inclusión/DUA</td><td>${p.criteria.inclusion} / 1.5</td></tr>
+      <tr><td>Argumentación</td><td>${p.criteria.argumentacion} / 1.5</td></tr>
+    </table>
+    <p><strong>Retroalimentación final:</strong> ${escapeHtml(p.finalFeedback)}</p>
+    <h3>Decisiones curriculares registradas</h3>
+    <p><strong>Nivel:</strong> ${escapeHtml(p.selections.level)}<br><strong>Eje:</strong> ${escapeHtml(p.selections.eje)}<br><strong>Ámbito:</strong> ${escapeHtml(p.selections.ambito)}<br><strong>Destreza:</strong> ${escapeHtml(p.selections.destreza)}<br><strong>Estrategia:</strong> ${escapeHtml(p.selections.strategy)}<br><strong>Indicador:</strong> ${escapeHtml(p.selections.indicator)}<br><strong>Técnica / instrumento:</strong> ${escapeHtml(p.selections.technique)} / ${escapeHtml(p.selections.instrument)}</p>
+    <h3>Producción escrita</h3>
+    <p><strong>Objetivo:</strong> ${escapeHtml(p.texts.objective)}</p>
+    <p><strong>Metodología:</strong> ${escapeHtml(p.texts.methodology)}</p>
+    <p><strong>Ajuste inclusivo:</strong> ${escapeHtml(p.texts.inclusion)}</p>
+  `;
+}
+async function sendToSheets(payload){
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL.includes('PEGUE_AQUI')){ $('saveStatus').className='note warnNote'; $('saveStatus').innerHTML='<strong>Modo local:</strong> el endpoint no está configurado; el reporte se generó, pero no se guardó en Google Sheets.'; return; }
+  $('saveStatus').className='note warnNote'; $('saveStatus').innerHTML='<strong>Enviando a Google Sheets...</strong> no cierre esta pestaña durante unos segundos.';
+  try{
+    const blob = new Blob([JSON.stringify(payload)], {type:'text/plain;charset=UTF-8'});
+    let sent = false;
+    if(navigator.sendBeacon){ sent = navigator.sendBeacon(APPS_SCRIPT_URL, blob); }
+    if(!sent){ await fetch(APPS_SCRIPT_URL,{method:'POST',mode:'no-cors',body:JSON.stringify(payload),headers:{'Content-Type':'text/plain;charset=UTF-8'}}); }
+    $('saveStatus').className='note okNote'; $('saveStatus').innerHTML='<strong>Registro enviado.</strong> El resultado debe aparecer en Google Sheets. Si el correo ya tenía un intento oficial, el Apps Script lo marcará como duplicado no oficial.';
+  }catch(e){
+    $('saveStatus').className='note badNote'; $('saveStatus').innerHTML='<strong>No se pudo enviar automáticamente.</strong> Descargue el respaldo JSON y entréguelo al docente.';
+  }
+}
+function downloadJson(){
+  if(!lastPayload){alert('Primero genere el reporte.');return;}
+  const blob=new Blob([JSON.stringify(lastPayload,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='reporte_evaluacion_dcii_'+lastPayload.student.email.replace(/[^a-z0-9]/gi,'_')+'.json'; a.click(); URL.revokeObjectURL(a.href);
+}
+window.addEventListener('DOMContentLoaded',init);
+</script>
+</body>
+</html>
